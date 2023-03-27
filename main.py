@@ -1,4 +1,5 @@
 import random
+import time
 
 def fitness(board):
     attacks = 0
@@ -53,8 +54,52 @@ def genetic_algorithm(size,population_size,max_generations):
         population = evolve(population)
     return None
 
-solution = genetic_algorithm(8,1000,100000)
-if solution:
-    print(solution)
-else:
-    print("No solution found")
+
+def runTest100():
+    with open("test100.txt", "r") as f:
+        for line in f:
+            line = line.split(",")
+            print("Teste com tabuleiro tamanho 8, população 100 e gerações maximas de 10000: ")
+            start_time = time.time()
+            solution = genetic_algorithm(int(line[0]), int(line[1]), int(line[2]))
+            end_time = time.time()
+            print("Tempo de execução: ", end_time - start_time, "s")
+            if solution:
+                print(solution)
+            else:
+                print("Nenhuma solução encontrada")
+
+def runTest1000():
+    with open("test1000.txt", "r") as f:
+        for line in f:
+            line = line.split(",")
+            print("Teste com tabuleiro tamanho 8, população 1000 e gerações maximas de 100000: ")
+            start_time = time.time()
+            solution = genetic_algorithm(int(line[0]), int(line[1]), int(line[2]))
+            end_time = time.time()
+            if solution:
+                print(solution)
+            else:
+                print("Nenhuma solução encontrada")
+            print("Tempo de execução: ", end_time - start_time)
+
+def main():
+    count = 0
+    while count < 3:
+        print("Teste ",count+1 ," - Configuração 1")
+        runTest100()
+        count += 1
+
+    count = 0
+    while count < 3:
+        print("Teste ",count+1 ," - Configuração 2")
+        runTest1000()
+        count += 1
+
+
+main()
+# solution = genetic_algorithm(8,1000,100000)
+# if solution:
+#     print(solution)
+# else:
+#     print("Nenhuma solução encontrada")
